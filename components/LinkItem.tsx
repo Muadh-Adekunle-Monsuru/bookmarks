@@ -17,7 +17,7 @@ export default function LinkItem({
 		<Link
 			href={href}
 			target='_blank'
-			className='group shadow-lg rounded-lg border-2 border-black  p-3 w-2/3 mx-auto hover:border-dashed'
+			className='group shadow-lg rounded-lg border-2 border-black bg-gray-50/30  p-3 w-2/3 mx-auto hover:border-dashed'
 		>
 			<div className='flex justify-between items-center'>
 				<div className='flex gap-2 items-center w-2/3'>
@@ -28,7 +28,7 @@ export default function LinkItem({
 					{new Date(parseInt(addedDate) * 1000).toLocaleDateString()}
 				</p>
 			</div>
-			<p>{description}</p>
+			<p className='pl-6 text-muted-foreground'>{description}</p>
 		</Link>
 	);
 }

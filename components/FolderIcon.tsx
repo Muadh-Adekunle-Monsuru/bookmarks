@@ -12,7 +12,7 @@ export default function FolderIcon({
 }) {
 	return (
 		<div
-			className='h-40 w-48 relative cursor-pointer   rounded-3xl'
+			className='h-40 w-48 relative cursor-pointer rounded-3xl'
 			style={{
 				backgroundColor: randomcolor({
 					luminosity: 'light',
@@ -22,7 +22,7 @@ export default function FolderIcon({
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				viewBox='0 0 512 512'
-				fill='#e5e7eb '
+				fill='#f9fafb'
 			>
 				<path
 					className='shadow-lg'

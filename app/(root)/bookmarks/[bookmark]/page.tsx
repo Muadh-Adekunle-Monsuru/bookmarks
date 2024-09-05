@@ -16,7 +16,7 @@ export default function page({ params }: { params: IParams }) {
 		(folder) => folder.groupName == decodeURI(params.bookmark!)
 	);
 	return (
-		<div className='p-10 bg-gray-50 min-h-screen'>
+		<div className='p-10  min-h-screen bg-gradient-to-br from-red-50 via-purple-100 to-red-100 '>
 			<div className='flex gap-2 items-center'>
 				<Button variant={'ghost'} asChild>
 					<Link href='/dashboard'>

@@ -7,7 +7,7 @@ import React from 'react';
 export default function Dashboard() {
 	const data = useDataStore((state) => state.data);
 	return (
-		<div className='min-h-screen h-full w-full bg-gray-100'>
+		<div className='min-h-screen h-full w-full  bg-gradient-to-br from-red-50 via-purple-100 to-red-100 '>
 			{data && data?.length > 0 ? <FolderView /> : <Upload />}
 		</div>
 	);

@@ -19,12 +19,11 @@ export default function Upload() {
 	const setData = useDataStore((state) => state.setData);
 	const data = useDataStore((state) => state.data);
 
-	const { object, submit } = useObject({
+	const { object, submit, isLoading } = useObject({
 		api: '/api/generate-object',
 		schema: QuerySchema,
 		onFinish: ({ object, error }) => {
-			console.log('done');
-			console.log(object);
+			//@ts-ignore
 			setData(object || error?.value);
 		},
 	});
@@ -42,6 +41,7 @@ export default function Upload() {
 		});
 
 		if (response.ok) {
+			setFile(undefined);
 			setLoading(false);
 			const result = await response.json();
 			console.log('total bookmarks:', result.length);
@@ -52,10 +52,13 @@ export default function Upload() {
 			setFile(undefined);
 		}
 	};
-
+	useEffect(() => {
+		console.log('receiving');
+		setData(object);
+	}, [object]);
 	return (
-		<div className='h-full mx-auto my-auto flex flex-col items-center justify-center'>
-			{!loading && !file && (
+		<div className='h-screen mx-auto my-auto flex flex-col items-center justify-center'>
+			{!loading && !file && !isLoading && (
 				<>
 					<h1 className='text-3xl font-bold'>Upload Your Bookmark File</h1>
 					<p className='py-2 text-muted-foreground text-base'>
@@ -64,51 +67,51 @@ export default function Upload() {
 							upload bookmarks
 						</span>
 					</p>
+					<div
+						className={`w-1/2 h-1/3 border-2 border-dashed cursor-pointer flex flex-col items-center justify-center border-muted-foreground rounded-3xl py-5 my-5 group ${
+							file ? 'scale-0 opacity-0 hidden' : ''
+						} transition-all duration-300 `}
+						onClick={() => {
+							document.getElementById('fileInput')?.click();
+						}}
+					>
+						{file ? (
+							<FolderCheck className='size-14 text-green-700' />
+						) : (
+							<FolderUp className='size-14 text-muted-foreground group-hover:text-black transition-colors duration-200' />
+						)}
+
+						{file ? (
+							<p className='py-2 text-green-700 font-medium'>
+								Upload Successful
+							</p>
+						) : (
+							<p className='text-muted-foreground'>
+								Click to upload .html file
+							</p>
+						)}
+					</div>
 				</>
 			)}
+
 			{error && (
 				<p className='text-xl font-medium text-red-600'>
 					Error processing document. Please try again
 				</p>
 			)}
-			<div
-				className={`w-1/2 h-1/3 border-2 border-dashed cursor-pointer flex flex-col items-center justify-center border-muted-foreground rounded-3xl py-5 my-5 group ${
-					file ? 'scale-0 opacity-0 hidden' : ''
-				} transition-all duration-300 `}
-				onClick={() => {
-					document.getElementById('fileInput')?.click();
-				}}
-			>
-				{file ? (
-					<FolderCheck className='size-14 text-green-700' />
-				) : (
-					<FolderUp className='size-14 text-muted-foreground group-hover:text-black transition-colors duration-200' />
-				)}
 
-				{file ? (
-					<p className='py-2 text-green-700 font-medium'>Upload Successful</p>
-				) : (
-					<p className='text-muted-foreground'>Click to upload .html file</p>
-				)}
-			</div>
-			{loading && (
-				<div className='flex flex-col items-center justify-center'>
-					<Image
-						src={'/thinking.png'}
-						alt='thinking'
-						className='size-52'
-						width={100}
-						height={100}
-					/>
-					<Loader className='animate-spin w-8 ' />
-					<p className='text-center animate-pulse font-medium text-xl'>
-						Processing ...
-					</p>
-					<p className=' text-muted-foreground text-sm'>
-						This might take a few moments.
-					</p>
-				</div>
-			)}
+			{loading ||
+				(isLoading && (
+					<div className='flex flex-col items-center justify-center'>
+						<Loader className='animate-spin w-9 ' />
+						<p className='text-center animate-pulse font-medium text-xl'>
+							Processing ...
+						</p>
+						<p className=' text-muted-foreground text-sm'>
+							This might take a few moments.
+						</p>
+					</div>
+				))}
 			<input
 				type='file'
 				className='hidden'
