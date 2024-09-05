@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 interface IParams {
 	bookmark?: string;
 }
-export default function page({ params }: { params: IParams }) {
+export default function BookmarkPage({ params }: { params: IParams }) {
 	const data = useDataStore((state) => state.data);
 
 	const folderData = data.find(

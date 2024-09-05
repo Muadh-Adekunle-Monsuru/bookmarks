@@ -52,18 +52,15 @@ export default function Upload() {
 			setFile(undefined);
 		}
 	};
-	useEffect(() => {
-		console.log('receiving');
-		setData(object);
-	}, [object]);
+
 	return (
 		<div className='h-screen mx-auto my-auto flex flex-col items-center justify-center'>
 			{!loading && !file && !isLoading && (
 				<>
 					<h1 className='text-3xl font-bold'>Upload Your Bookmark File</h1>
 					<p className='py-2 text-muted-foreground text-base'>
-						Check how to{' '}
-						<span className='hover:underline underline-offset-4 decoration-dashed font-medium cursor-pointer'>
+						Check how to
+						<span className='ml-1 hover:underline underline-offset-4 decoration-dashed font-medium cursor-pointer'>
 							upload bookmarks
 						</span>
 					</p>
