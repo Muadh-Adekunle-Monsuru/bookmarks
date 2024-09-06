@@ -13,27 +13,32 @@ import { QuerySchema } from '@/lib/schema';
 import Link from 'next/link';
 import ProfileMenu from '../ProfileMenu';
 import { UserButton } from '@clerk/nextjs';
-import { SignedIn, SignedOut } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 import { Button } from './button';
+import { createRecord } from '@/lib/actions';
 export default function Upload() {
 	const [file, setFile] = useState<FileList | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const [tempData, setTempData] = useState<any[]>([]);
 	const setData = useDataStore((state) => state.setData);
 	const data = useDataStore((state) => state.data);
+	const { userId } = useAuth();
 
 	const { object, submit, isLoading } = useObject({
 		api: '/api/generate-object',
 		schema: QuerySchema,
 		onFinish: ({ object, error }) => {
 			//@ts-ignore
-			setData(object || error?.value);
+			// setData(object || error?.value);
+			console.log(error.value);
+			if (userId) {
+				//@ts-ignore
+				const recordId = createRecord(userId, [JSON.stringify(error?.value)]);
+			}
 		},
 	});
 
 	useEffect(() => {
-		console.log('receiving');
 		if (object && object !== undefined) {
 			//@ts-ignore
 			setData(object);

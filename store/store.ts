@@ -20,7 +20,6 @@ type Item = {
 export const useDataStore = create<DataStore>((set) => ({
 	data: [],
 	setData: (values) => {
-		console.log('Updating state with:', values);
 		set((state) => ({ data: values }));
 	},
 }));

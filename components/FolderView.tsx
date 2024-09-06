@@ -12,8 +12,8 @@ import ProfileMenu from './ProfileMenu';
 export default function FolderView() {
 	const data = useDataStore((state) => state.data);
 	return (
-		<div className='lg:px-20 pb-20 h-full'>
-			<div className='w-full flex items-center justify-between'>
+		<div className='lg:px-20 px-5 pb-20 h-full'>
+			<div className='w-full flex items-center justify-between '>
 				<h1 className='text-3xl font-bold py-10'>Bookmarks</h1>
 				<div className='flex items-center gap-3'>
 					<BookmarkButton />
