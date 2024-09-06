@@ -9,17 +9,17 @@ import { Button } from '@/components/ui/button';
 import ProfileMenu from '@/components/ProfileMenu';
 import FolderIcon from '@/components/FolderIcon';
 import { getHistory } from '@/lib/actions';
+import Logo from '@/components/Logo';
 
 export default function Page() {
-	const data = useDataStore((state) => state.data);
-	const setData = useDataStore((state) => state.setData);
+	const data = useDataStore((state) => state.historyData);
+	const setData = useDataStore((state) => state.setHistoryData);
 	const { userId, isLoaded } = useAuth();
 
 	useEffect(() => {
 		const fetch = async () => {
 			if (!userId || !isLoaded) return;
 			const data = await getHistory(userId);
-			console.log(data);
 			setData(JSON.parse(data?.bookmarks[0]!));
 		};
 		fetch();
@@ -27,7 +27,10 @@ export default function Page() {
 	return (
 		<div className='lg:px-2 min-h-screen pb-20 h-full bg-gradient-to-bl from-pink-200 via-purple-200 to-blue-200'>
 			<div className='w-full flex items-center justify-between lg:px-20 px-5'>
-				<h1 className='text-3xl font-bold py-10'>History</h1>
+				<div className='flex gap-3 items-center py-10'>
+					<Logo />
+					<h1 className='text-3xl font-bold'>History</h1>
+				</div>
 				<div className='flex items-center gap-3'>
 					<SignedIn>
 						<Button variant={'ghost'} asChild>

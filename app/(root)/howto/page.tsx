@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function page() {
 	return (
-		<div className='pb-20 h-full w-full  bg-gradient-to-br from-blue-100 via-purple-100 to-red-200 '>
+		<div className='pb-20 h-full w-full px-5  bg-gradient-to-br from-blue-100 via-purple-100 to-red-200 '>
 			<h1 className='text-3xl font-semibold p-12 text-center'>
 				How to Export Bookmarks
 			</h1>

@@ -16,12 +16,14 @@ import { UserButton } from '@clerk/nextjs';
 import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 import { Button } from './button';
 import { createRecord } from '@/lib/actions';
+import Logo from '../Logo';
 export default function Upload() {
 	const [file, setFile] = useState<FileList | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const setData = useDataStore((state) => state.setData);
 	const data = useDataStore((state) => state.data);
+	const setStreaming = useDataStore((state) => state.setStreaming);
 	const { userId } = useAuth();
 
 	const { object, submit, isLoading } = useObject({
@@ -30,7 +32,8 @@ export default function Upload() {
 		onFinish: ({ object, error }) => {
 			//@ts-ignore
 			// setData(object || error?.value);
-			console.log(error.value);
+			// console.log(error.value);
+			setStreaming();
 			if (userId) {
 				//@ts-ignore
 				const recordId = createRecord(userId, [JSON.stringify(error?.value)]);
@@ -61,6 +64,7 @@ export default function Upload() {
 			setLoading(false);
 			const result = await response.json();
 			console.log('total bookmarks:', result.length);
+			setStreaming();
 			submit(result);
 		} else {
 			setLoading(false);
@@ -75,20 +79,25 @@ export default function Upload() {
 				data.length > 0 && 'hidden'
 			}`}
 		>
-			<div className='absolute top-3 right-10 flex items-center gap-4'>
-				<SignedIn>
-					<Button variant={'ghost'} asChild>
-						<Link href={'/history'}>History</Link>
-					</Button>
-					<UserButton />
-				</SignedIn>
-				<SignedOut>
-					<ProfileMenu />
-				</SignedOut>
+			<div className='absolute top-3 left-1 px-3 lg:px-20 w-full flex items-center justify-between'>
+				<Logo />
+				<div className=' flex items-center gap-2'>
+					<SignedIn>
+						<Button variant={'ghost'} asChild>
+							<Link href={'/history'}>History</Link>
+						</Button>
+						<UserButton />
+					</SignedIn>
+					<SignedOut>
+						<ProfileMenu />
+					</SignedOut>
+				</div>
 			</div>
 			{!loading && !file && !isLoading && (
 				<>
-					<h1 className='text-3xl font-bold'>Upload Your Bookmark File</h1>
+					<h1 className='text-3xl font-bold text-center'>
+						Upload Your Bookmark File
+					</h1>
 					<p className='py-2 text-muted-foreground text-base'>
 						Check how to
 						<span className='ml-1 hover:underline underline-offset-4 decoration-dashed font-medium cursor-pointer'>
@@ -96,7 +105,7 @@ export default function Upload() {
 						</span>
 					</p>
 					<div
-						className={`w-1/2 h-1/3 border-2 border-dashed cursor-pointer flex flex-col items-center justify-center border-muted-foreground rounded-3xl py-5 my-5 group ${
+						className={`w-3/4 md:w-1/2 h-1/3 border-2 border-dashed cursor-pointer flex flex-col items-center justify-center border-muted-foreground rounded-3xl py-5 my-5 group ${
 							file ? 'scale-0 opacity-0 hidden' : ''
 						} transition-all duration-300 `}
 						onClick={() => {
