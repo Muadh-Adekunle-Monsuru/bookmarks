@@ -8,7 +8,6 @@ import BookmarkButton from './BookmarkButton';
 
 export default function FolderView() {
 	const data = useDataStore((state) => state.data);
-	// const url = Encode
 	return (
 		<div className='lg:px-20 pb-20 h-full'>
 			<div className='w-full flex items-center justify-between'>

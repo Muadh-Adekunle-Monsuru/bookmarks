@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 			schema: QuerySchema,
 			prompt: 'Here is the data to be sorted through:' + JSON.stringify(data),
 			system:
-				'Here is array of a browser bookmark links, group these links into folders, folders can have other named subfolders. No need to repeat entries. only group links that has been provided. The name should be the name  or domain of the link, give a short description of the site too. Group any relatated links into a single folder to prevent having multiple folders with single entries',
+				'Organize the following array of browser bookmark links into categorized folders. Combine loosely related links into the same folder to minimize single-entry folders. The link"s name names should be based on the websites name or domain, and each link should have a short description of the site. Ensure that no links are repeated. Folders must not have more than 20 links, do not create monolithic folders',
 		});
 
 		return result.toTextStreamResponse();

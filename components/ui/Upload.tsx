@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { experimental_useObject as useObject } from 'ai/react';
 import { QuerySchema } from '@/lib/schema';
+import Link from 'next/link';
 
 export default function Upload() {
 	const [file, setFile] = useState<FileList | undefined>(undefined);
@@ -28,6 +29,13 @@ export default function Upload() {
 		},
 	});
 
+	useEffect(() => {
+		console.log('receiving');
+		if (object && object !== undefined) {
+			//@ts-ignore
+			setData(object);
+		}
+	}, [object]);
 	const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
 		if (!event.target.files) return;
 		setFile(event.target?.files);
@@ -54,14 +62,18 @@ export default function Upload() {
 	};
 
 	return (
-		<div className='h-screen mx-auto my-auto flex flex-col items-center justify-center'>
+		<div
+			className={`h-screen mx-auto my-auto flex flex-col items-center justify-center ${
+				data.length > 0 && 'hidden'
+			}`}
+		>
 			{!loading && !file && !isLoading && (
 				<>
 					<h1 className='text-3xl font-bold'>Upload Your Bookmark File</h1>
 					<p className='py-2 text-muted-foreground text-base'>
 						Check how to
 						<span className='ml-1 hover:underline underline-offset-4 decoration-dashed font-medium cursor-pointer'>
-							upload bookmarks
+							<Link href={'/howto'}>upload bookmarks</Link>
 						</span>
 					</p>
 					<div
@@ -97,18 +109,17 @@ export default function Upload() {
 				</p>
 			)}
 
-			{loading ||
-				(isLoading && (
-					<div className='flex flex-col items-center justify-center'>
-						<Loader className='animate-spin w-9 ' />
-						<p className='text-center animate-pulse font-medium text-xl'>
-							Processing ...
-						</p>
-						<p className=' text-muted-foreground text-sm'>
-							This might take a few moments.
-						</p>
-					</div>
-				))}
+			{(loading || isLoading) && (
+				<div className='flex flex-col items-center justify-center'>
+					<Loader className='animate-spin w-9 ' />
+					<p className='text-center animate-pulse font-medium text-xl'>
+						Processing ...
+					</p>
+					<p className=' text-muted-foreground text-sm'>
+						This might take a few moments.
+					</p>
+				</div>
+			)}
 			<input
 				type='file'
 				className='hidden'

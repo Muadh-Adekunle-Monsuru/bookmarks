@@ -13,7 +13,7 @@ export default function BookmarkPage({ params }: { params: IParams }) {
 	const data = useDataStore((state) => state.data);
 
 	const folderData = data.find(
-		(folder) => folder.groupName == decodeURI(params.bookmark!)
+		(folder) => folder.groupName == decodeURIComponent(params.bookmark!)
 	);
 	return (
 		<div className='p-10  min-h-screen bg-gradient-to-br from-red-50 via-purple-100 to-red-100 '>
@@ -23,7 +23,9 @@ export default function BookmarkPage({ params }: { params: IParams }) {
 						<ChevronLeft className='size-4 inline' /> Back
 					</Link>
 				</Button>
-				<p className='font-bold text-3xl '>{decodeURI(params.bookmark!)}</p>
+				<p className='font-bold text-3xl '>
+					{decodeURIComponent(params.bookmark!)}
+				</p>
 			</div>
 			<div className='flex flex-col gap-3 py-10'>
 				{folderData?.links &&
