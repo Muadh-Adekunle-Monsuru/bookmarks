@@ -11,7 +11,10 @@ import React, {
 import { experimental_useObject as useObject } from 'ai/react';
 import { QuerySchema } from '@/lib/schema';
 import Link from 'next/link';
-
+import ProfileMenu from '../ProfileMenu';
+import { UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
+import { Button } from './button';
 export default function Upload() {
 	const [file, setFile] = useState<FileList | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
@@ -67,6 +70,17 @@ export default function Upload() {
 				data.length > 0 && 'hidden'
 			}`}
 		>
+			<div className='absolute top-3 right-10 flex items-center gap-4'>
+				<SignedIn>
+					<Button variant={'ghost'} asChild>
+						<Link href={'/history'}>History</Link>
+					</Button>
+					<UserButton />
+				</SignedIn>
+				<SignedOut>
+					<ProfileMenu />
+				</SignedOut>
+			</div>
 			{!loading && !file && !isLoading && (
 				<>
 					<h1 className='text-3xl font-bold'>Upload Your Bookmark File</h1>
