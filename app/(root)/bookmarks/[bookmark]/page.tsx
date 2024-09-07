@@ -11,8 +11,9 @@ interface IParams {
 }
 export default function BookmarkPage({ params }: { params: IParams }) {
 	const data = useDataStore((state) => state.data);
-
-	const folderData = data.find(
+	const historyData = useDataStore((state) => state.historyData);
+	const combined = [...data, ...historyData];
+	const folderData = combined.find(
 		(folder) => folder.groupName == decodeURIComponent(params.bookmark!)
 	);
 	return (
