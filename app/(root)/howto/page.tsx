@@ -11,19 +11,19 @@ export default function page() {
 			<DownloadStepCard
 				step='1'
 				description='Click the three dots in the top-right corner of your browser, hover over "Bookmarks," and then select "Bookmark Manager." Alternatively, you can press Ctrl + Shift + O to open it directly.'
-				imageSrc='/step1.1.png'
+				imageSrc='/first.png'
 				title='Open the Bookmark Manager'
 			/>
 			<DownloadStepCard
 				step='2'
 				description='In the Bookmark Manager, click the three dots in the top-right corner of the page, then select "Export bookmarks."'
-				imageSrc='/step2.png'
+				imageSrc='/second.png'
 				title='Export Your Bookmarks'
 			/>
 			<DownloadStepCard
 				step='3'
 				description='In the Bookmark Manager, click the three dots in the top-right corner of the page, then select "Export bookmarks."'
-				imageSrc='/step3.png'
+				imageSrc='/third.png'
 				title='Save Your Bookmarks'
 			/>
 		</div>
